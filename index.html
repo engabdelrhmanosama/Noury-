@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noury 🧸🌍</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <!-- خطوط جوجل عربية وأنيقة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reem+Kufi:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff4d6d;
-            --accent-color: #ffb703;
-            --bg-gradient: radial-gradient(circle at center, #2b092b 0%, #1a0826 60%, #0f0c20 100%);
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --text-color: #ffffff;
+            --primary-color: #ff4b72;
+            --bg-color: #fff5f7;
+            --card-bg: #ffffff;
+            --text-color: #4a4a4a;
         }
 
         * {
@@ -22,572 +22,422 @@
         }
 
         body {
-            background: var(--bg-gradient);
+            background-color: var(--bg-color);
             color: var(--text-color);
             min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-attachment: fixed;
-        }
-
-        /* الجسيمات المتحركة */
-        .heart {
-            position: fixed;
-            font-size: 18px;
-            color: var(--primary-color);
-            animation: float 7s linear infinite;
-            z-index: 0;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
-        }
-
-        /* شاشات الدخول */
-        .auth-container {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-gradient);
-            z-index: 100;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .auth-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            padding: 35px 25px;
-            border-radius: 25px;
-            text-align: center;
-            max-width: 420px;
+        /* قلوب طايرة في الخلفية */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .auth-card h2 {
+        /* شاشة تسجيل الدخول */
+        .login-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 75, 114, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+
+        .login-card h1 {
             font-family: 'Reem Kufi', sans-serif;
             color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            margin: 10px 0;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            font-size: 16px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
-        }
-
-        textarea {
-            text-align: right;
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        button {
+        .login-card input {
             width: 100%;
             padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(45deg, #ff4d6d, #ff758f);
-            color: white;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
+            border: 2px solid #ffd1dc;
+            border-radius: 10px;
+            outline: none;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
         }
 
-        button:hover {
-            transform: translateY(-2deg);
-            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
+        .login-card input:focus {
+            border-color: var(--primary-color);
         }
 
-        .toggle-auth {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #ddd;
+        .login-card button, .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
             cursor: pointer;
-            text-decoration: underline;
+            box-shadow: 0 5px 15px rgba(255, 75, 114, 0.4);
+            transition: 0.3s transform, 0.3s background;
+        }
+
+        .login-card button:hover, .btn:hover {
+            transform: translateY(-2px);
+            background: #e03e61;
+        }
+
+        .error-msg {
+            color: red;
+            margin-top: 10px;
+            display: none;
         }
 
         /* المحتوى الرئيسي */
-        .main-content {
+        .container {
             display: none;
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             padding: 20px;
-            z-index: 1;
+            z-index: 10;
         }
 
         header {
             text-align: center;
-            margin: 30px 0;
+            margin-bottom: 30px;
         }
 
-        .top-name {
+        header h1 {
             font-family: 'Reem Kufi', sans-serif;
-            font-size: 3.5rem;
-            color: #ff758f;
-            text-shadow: 0 0 20px rgba(255, 117, 143, 0.6);
-            direction: ltr;
-            display: inline-block;
+            font-size: 3rem;
+            color: var(--primary-color);
         }
 
-        /* مشغل الصوت والموسيقى */
+        /* مشغل الأغنية */
         .music-player {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 15px 20px;
-            border-radius: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .play-btn {
-            width: auto;
-            padding: 8px 18px;
-            margin: 0;
-            font-size: 0.9rem;
+            margin: 0 auto 30px auto;
+            max-width: 500px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
         /* الرسالة الكبيرة */
-        .love-letter-card {
-            background: linear-gradient(135deg, rgba(255, 77, 109, 0.15), rgba(255, 183, 3, 0.05));
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 77, 109, 0.3);
-            border-radius: 25px;
-            padding: 35px 25px;
+        .love-letter {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            line-height: 1.8;
+            font-size: 1.2rem;
             margin-bottom: 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-        }
-
-        .love-letter-card h2 {
-            color: var(--primary-color);
-            font-family: 'Reem Kufi', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        .love-letter-card p {
-            font-size: 1.25rem;
-            line-height: 2.1;
-            white-space: pre-line;
-            color: #fff0f3;
-        }
-
-        /* معرض الذكريات (السلايدر) */
-        .gallery {
-            display: flex;
-            flex-direction: column;
-            gap: 35px;
-        }
-
-        .gallery-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 25px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .slider-container {
             position: relative;
-            width: 100%;
-            height: 350px;
-            background: #000;
+            border-right: 5px solid var(--primary-color);
+            white-space: pre-wrap;
         }
 
-        .slider-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .slider-img.active {
-            display: block;
-        }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
+        /* ألبوم الصور */
+        .gallery-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            z-index: 10;
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
         }
 
-        .slider-btn.prev { right: 10px; }
-        .slider-btn.next { left: 10px; }
+        .gallery-item img {
+            width: 100%;
+            max-width: 350px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
 
-        .gallery-card .text {
-            padding: 25px;
-            font-size: 1.15rem;
-            line-height: 1.9;
-            text-align: center;
-            color: #e2e8f0;
+        .gallery-item p {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            min-width: 250px;
         }
 
         /* لوحة التحكم للأدمن */
         .admin-panel {
             display: none;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px dashed var(--primary-color);
-            padding: 25px;
+            background: white;
+            padding: 30px;
             border-radius: 20px;
-            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 700px;
+            z-index: 10;
         }
 
-        .admin-panel h3 {
+        .admin-panel h2 {
             color: var(--primary-color);
-            margin-bottom: 12px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        .section-divider {
-            margin: 20px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .delete-btn {
-            background: #d62828;
-            margin-top: 5px;
-            padding: 5px 15px;
-            font-size: 0.85rem;
-            width: auto;
-            align-self: center;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group textarea, .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .photo-input-group {
+            border: 1px dashed var(--primary-color);
+            padding: 15px;
+            border-radius: 10px;
             margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .gallery-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .gallery-item img {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- القلوب المتحركة -->
-    <script>
-        for (let i = 0; i < 25; i++) {
-            let heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = ['❤', '💖', '✨', '🧸'][Math.floor(Math.random() * 4)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            document.body.appendChild(heart);
-        }
-    </script>
+    <canvas class="hearts-bg" id="heartsCanvas"></canvas>
 
-    <!-- شاشة الدخول للبنت -->
-    <div id="userAuth" class="auth-container">
-        <div class="auth-card">
-            <h2>Noury 🧸🌍</h2>
-            <p style="margin-bottom: 15px; color: #ccc;">اكتبي كلمة السر للدخول 🔐:</p>
-            <input type="password" id="userPassword" placeholder="كلمة السر">
-            <button onclick="loginUser()">دخول ✨</button>
-            <div class="toggle-auth" onclick="switchToAdmin()">دخول الأدمن</div>
-        </div>
+    <!-- شاشة الباسورد -->
+    <div class="login-card" id="loginCard">
+        <h1>Noury 🧸🌍</h1>
+        <p style="margin-bottom: 15px; color: #777;">اكتبي السر عشان تفتحي قلبي ❤️</p>
+        <input type="password" id="passInput" placeholder="أدخلي الباسورد...">
+        <button onclick="checkPassword()">دخول ✨</button>
+        <p class="error-msg" id="errorMsg">الباسورد مش صح يا حلوة! 🙈</p>
     </div>
 
-    <!-- شاشة الدخول للأدمن -->
-    <div id="adminAuth" class="auth-container" style="display: none;">
-        <div class="auth-card">
-            <h2>تسجيل دخول الأدمن 🔑</h2>
-            <input type="password" id="adminPass" placeholder="كلمة السر (8 أصفار)">
-            <button onclick="loginAdmin()">دخول</button>
-            <div class="toggle-auth" onclick="switchToUser()">الرجوع لدخول الزوار</div>
-        </div>
-    </div>
-
-    <!-- المحتوى الرئيسي -->
-    <div id="mainContent" class="main-content">
+    <!-- الصفحة الرئيسية للبت (Noury) -->
+    <div class="container" id="mainContent">
         <header>
-            <h1 class="top-name">Noury 🧸🌍</h1>
-            <p style="color: #ffb703;">حكايتنا سوا والأيام الجميلة ❤️</p>
+            <h1>Noury 🧸🌍</h1>
+            <p>أغلى حاجة في حياتي ❤️</p>
         </header>
 
-        <!-- مشغل الموسيقى -->
+        <!-- مشغل اغنية توليت - حبيبي ده عليه حاجات -->
         <div class="music-player">
-            <span>🎵 حبيبي - توليت</span>
-            <button class="play-btn" onclick="toggleAudio()" id="audioBtn">تشغيل الموسيقى ▶</button>
-            <audio id="bgMusic" loop preload="auto">
-                <source src="Albumaty.Com_tww_lyt_hby.mp3" type="audio/mpeg">
+            <span>🎵 حبيبي ده عليه حاجات - TUL8TE</span>
+            <audio controls id="bgMusic" loop>
+                <!-- يمكنك تغيير الرابط برابط صوت مباشر للأغنية لو متاح -->
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                متصفحك لا يدعم الصوت.
             </audio>
         </div>
 
-        <!-- لوحة التحكم للأدمن -->
-        <div id="adminPanel" class="admin-panel">
-            <h3>✉️ تحديث الرسالة الرئيسية:</h3>
-            <textarea id="mainLetterInput" placeholder="اكتب الرسالة الكبيرة هنا..."></textarea>
-            <button onclick="saveMainLetter()">حفظ الرسالة</button>
-
-            <div class="section-divider"></div>
-
-            <h3>📸 إضافة ألبوم ذكرى جديدة (يمكن تحديد عدة صور):</h3>
-            <input type="file" id="imageInput" accept="image/*" multiple>
-            <input type="text" id="captionInput" placeholder="اكتب الكلام الخاص بهذه الذكرى...">
-            <button onclick="addMemory()">إضافة الذكرى للألبوم</button>
-        </div>
-
         <!-- الرسالة الكبيرة -->
-        <div class="love-letter-card">
-            <h2>رسالة من قلبي ليكِ 💌</h2>
-            <p id="mainLetterText">كل سنة وإحنا مع بعض، أنتِ أجمل حاجة حصلت في حياتي...</p>
+        <div class="love-letter" id="displayLetter">
+            الرسالة لسة متكتبتش.. ادخل كأدمن واكتبها! ❤️️
         </div>
 
-        <!-- معرض ذكرياتكم -->
-        <div class="gallery" id="gallery">
-            <!-- ستظهر الكروت والسلايدر هنا -->
+        <!-- ألبوم الصور -->
+        <div id="displayGallery">
+            <!-- الصور هتنزل هنا تلقائياً -->
         </div>
     </div>
 
+    <!-- لوحة التحكم (الادمن - ليك انت) -->
+    <div class="admin-panel" id="adminPanel">
+        <h2>لوحة التحكم الخاصة بـ "حب عمرك" 🛠️❤️</h2>
+        
+        <div class="form-group">
+            <label>الرسالة الكبيرة:</label>
+            <textarea id="adminLetter" rows="6" placeholder="اكتب كلامك الحلو هنا..."></textarea>
+        </div>
+
+        <hr style="margin: 20px 0;">
+
+        <h3>إضافة صور وكلام:</h3>
+        <div id="photoInputs">
+            <!-- خانات الصور -->
+        </div>
+        <button class="btn" onclick="addPhotoInput()" style="background: #28a745; margin-bottom: 20px;">+ إضافة صورة جديدة</button>
+
+        <br>
+        <button class="btn" onclick="saveAdminData()" style="width: 100%;">حفظ التعديلات ✨</button>
+    </div>
+
     <script>
-        // كلمة سر الزائرة (يمكنك تعديلها من هنا)
-        const USER_PASS = "29052026"; 
-        const ADMIN_PASS = "00000000";
+        // أنيميشن القلوب الطايرة
+        const canvas = document.getElementById('heartsCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        function switchToAdmin() {
-            document.getElementById('userAuth').style.display = 'none';
-            document.getElementById('adminAuth').style.display = 'flex';
+        const hearts = [];
+        for (let i = 0; i < 25; i++) {
+            hearts.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 15 + 10,
+                speed: Math.random() * 1 + 0.5,
+                opacity: Math.random() * 0.5 + 0.3
+            });
         }
 
-        function switchToUser() {
-            document.getElementById('adminAuth').style.display = 'none';
-            document.getElementById('userAuth').style.display = 'flex';
+        function drawHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                ctx.fillStyle = `rgba(255, 75, 114, ${heart.opacity})`;
+                ctx.beginPath();
+                ctx.arc(heart.x, heart.y, heart.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+                heart.y -= heart.speed;
+                if (heart.y < -10) heart.y = canvas.height + 10;
+            });
+            requestAnimationFrame(drawHearts);
         }
+        drawHearts();
 
-        function loginUser() {
-            const passInput = document.getElementById('userPassword').value;
-            if (passInput === USER_PASS || passInput === "2026-05-29") {
-                openWebsite(false);
+        // التحقق من الباسورد
+        function checkPassword() {
+            const pass = document.getElementById('passInput').value;
+            const loginCard = document.getElementById('loginCard');
+            const mainContent = document.getElementById('mainContent');
+            const adminPanel = document.getElementById('adminPanel');
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (pass === '2952026') {
+                // دخول البت (Noury)
+                loginCard.style.display = 'none';
+                mainContent.style.display = 'block';
+                loadDataForUser();
+                document.getElementById('bgMusic').play(); // تشغيل الأغنية تلقائياً
+            } else if (pass === '112008') {
+                // دخول الأدمن (أنت)
+                loginCard.style.display = 'none';
+                adminPanel.style.display = 'block';
+                loadDataForAdmin();
             } else {
-                alert("كلمة السر غير صحيحة! حاول تفتكري أكتر 😉❤️");
+                errorMsg.style.display = 'block';
             }
         }
 
-        function loginAdmin() {
-            const passInput = document.getElementById('adminPass').value;
-            if (passInput === ADMIN_PASS) {
-                openWebsite(true);
-            } else {
-                alert("كلمة السر خاطئة!");
-            }
+        // إضافة خانة صورة جديدة في لوحة التحكم
+        function addPhotoInput(imgSrc = '', caption = '') {
+            const container = document.getElementById('photoInputs');
+            const div = document.createElement('div');
+            div.className = 'photo-input-group';
+            div.innerHTML = `
+                <div class="form-group">
+                    <label>اختر صورة من جهازك:</label>
+                    <input type="file" accept="image/*" class="img-file" onchange="previewImage(this)">
+                    <input type="hidden" class="img-base64" value="${imgSrc}">
+                    ${imgSrc ? `<img src="${imgSrc}" style="max-width: 100px; margin-top: 10px; border-radius: 8px;">` : ''}
+                </div>
+                <div class="form-group">
+                    <label>الكلام اللي جنب الصورة:</label>
+                    <input type="text" class="img-caption" value="${caption}" placeholder="اكتب ذكرياتكم هنا...">
+                </div>
+            `;
+            container.appendChild(div);
         }
 
-        function toggleAudio() {
-            const audio = document.getElementById('bgMusic');
-            const btn = document.getElementById('audioBtn');
-            if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerText = "إيقاف مؤقت ⏸";
-                }).catch(e => {
-                    alert("تعذر تشغيل الصوت، تأكد من وجود ملف الأغنية في GitHub");
-                });
-            } else {
-                audio.pause();
-                btn.innerText = "تشغيل الموسيقى ▶";
-            }
-        }
-
-        function openWebsite(isAdmin) {
-            document.getElementById('userAuth').style.display = 'none';
-            document.getElementById('adminAuth').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-
-            if (isAdmin) {
-                document.getElementById('adminPanel').style.display = 'block';
-            }
-
-            const audio = document.getElementById('bgMusic');
-            audio.play().then(() => {
-                document.getElementById('audioBtn').innerText = "إيقاف مؤقت ⏸";
-            }).catch(() => {});
-
-            loadMainLetter();
-            loadMemories(isAdmin);
-        }
-
-        function saveMainLetter() {
-            const text = document.getElementById('mainLetterInput').value;
-            if (text) {
-                localStorage.setItem('mainLoveLetter', text);
-                document.getElementById('mainLetterText').innerText = text;
-                alert("تم حفظ الرسالة بنجاح ❤️");
-            }
-        }
-
-        function loadMainLetter() {
-            const savedLetter = localStorage.getItem('mainLoveLetter');
-            if (savedLetter) {
-                document.getElementById('mainLetterText').innerText = savedLetter;
-                document.getElementById('mainLetterInput').value = savedLetter;
-            }
-        }
-
-        // تحسين عملية ضغط وتقليل حجم الصور حتى تترفع وتحفظ بدون مشاكل
-        function compressImage(file, callback) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = new Image();
-                img.onload = function () {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-                    const max = 800; // أقصى عرض/ارتفاع لضمان السرعة والمساحة
-
-                    if (width > height && width > max) {
-                        height *= max / width;
-                        width = max;
-                    } else if (height > max) {
-                        width *= max / height;
-                        height = max;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/jpeg', 0.7)); // ضغط الصورة بنسبة 70%
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function addMemory() {
-            const imageInput = document.getElementById('imageInput');
-            const captionInput = document.getElementById('captionInput');
-
-            if (imageInput.files && imageInput.files.length > 0 && captionInput.value) {
-                const files = Array.from(imageInput.files);
-                const compressedImages = [];
-                let processed = 0;
-
-                files.forEach(file => {
-                    compressImage(file, function(compressedUrl) {
-                        compressedImages.push(compressedUrl);
-                        processed++;
-                        if (processed === files.length) {
-                            try {
-                                const memories = JSON.parse(localStorage.getItem('memories') || '[]');
-                                memories.push({
-                                    imgs: compressedImages,
-                                    text: captionInput.value
-                                });
-                                localStorage.setItem('memories', JSON.stringify(memories));
-                                captionInput.value = '';
-                                imageInput.value = '';
-                                alert("تمت إضافة الذكرى والألبوم بنجاح ✨");
-                                loadMemories(true);
-                            } catch (e) {
-                                alert("المساحة المتاحة للصور امتلأت! حاول رفع عدد صور أقل أو بحجم أصغر.");
-                            }
-                        }
-                    });
-                });
-            } else {
-                alert("يرجى اختيار صورة أو أكثر وكتابة النص!");
-            }
-        }
-
-        function deleteMemory(index) {
-            if (confirm("هل أنت تأكد من حذف هذه الذكرى؟")) {
-                const memories = JSON.parse(localStorage.getItem('memories') || '[]');
-                memories.splice(index, 1);
-                localStorage.setItem('memories', JSON.stringify(memories));
-                loadMemories(true);
-            }
-        }
-
-        function loadMemories(isAdmin = false) {
-            const gallery = document.getElementById('gallery');
-            const memories = JSON.parse(localStorage.getItem('memories') || '[]');
-            
-            gallery.innerHTML = '';
-            memories.forEach((mem, cardIdx) => {
-                const card = document.createElement('div');
-                card.className = 'gallery-card';
-                
-                const imgs = mem.imgs || [mem.img];
-
-                let sliderHtml = `<div class="slider-container" id="slider-${cardIdx}">`;
-                
-                imgs.forEach((imgSrc, imgIdx) => {
-                    sliderHtml += `<img src="${imgSrc}" class="slider-img ${imgIdx === 0 ? 'active' : ''}">`;
-                });
-
-                if (imgs.length > 1) {
-                    sliderHtml += `
-                        <button class="slider-btn prev" onclick="moveSlide(${cardIdx}, -1)">❯</button>
-                        <button class="slider-btn next" onclick="moveSlide(${cardIdx}, 1)">❮</button>
-                    `;
+        // تحويل الصورة لرابط Base64 للحفظ
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    input.nextElementSibling.value = e.target.result;
                 }
-                
-                sliderHtml += `</div>`;
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
-                let deleteBtnHtml = isAdmin ? `<button class="delete-btn" onclick="deleteMemory(${cardIdx})">حذف الذكرى 🗑️</button>` : '';
+        // حفظ بيانات الأدمن في LocalStorage
+        function saveAdminData() {
+            const letter = document.getElementById('adminLetter').value;
+            const photoGroups = document.querySelectorAll('.photo-input-group');
+            const galleryData = [];
 
-                card.innerHTML = `
-                    ${sliderHtml}
-                    <div class="text">${mem.text}</div>
-                    ${deleteBtnHtml}
+            photoGroups.forEach(group => {
+                const imgSrc = group.querySelector('.img-base64').value;
+                const caption = group.querySelector('.img-caption').value;
+                if (imgSrc) {
+                    galleryData.push({ imgSrc, caption });
+                }
+            });
+
+            localStorage.setItem('noury_letter', letter);
+            localStorage.setItem('noury_gallery', JSON.stringify(galleryData));
+
+            alert('تم حفظ الرسالة والصور بنجاح! ❤️');
+            location.reload();
+        }
+
+        // تحميل البيانات في صفحة المستخدم (Noury)
+        function loadDataForUser() {
+            const letter = localStorage.getItem('noury_letter');
+            const gallery = JSON.parse(localStorage.getItem('noury_gallery') || '[]');
+
+            if (letter) {
+                document.getElementById('displayLetter').textContent = letter;
+            }
+
+            const galleryContainer = document.getElementById('displayGallery');
+            galleryContainer.innerHTML = '';
+
+            gallery.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `
+                    <img src="${item.imgSrc}" alt="ذكرياتنا">
+                    <p>${item.caption}</p>
                 `;
-                gallery.appendChild(card);
+                galleryContainer.appendChild(div);
             });
         }
 
-        function moveSlide(cardIdx, direction) {
-            const container = document.getElementById(`slider-${cardIdx}`);
-            const slides = container.querySelectorAll('.slider-img');
-            let activeIdx = 0;
+        // تحميل البيانات في لوحة التحكم (الأدمن)
+        function loadDataForAdmin() {
+            const letter = localStorage.getItem('noury_letter') || '';
+            const gallery = JSON.parse(localStorage.getItem('noury_gallery') || '[]');
 
-            slides.forEach((slide, idx) => {
-                if (slide.classList.contains('active')) {
-                    activeIdx = idx;
-                    slide.classList.remove('active');
-                }
-            });
+            document.getElementById('adminLetter').value = letter;
+            document.getElementById('photoInputs').innerHTML = '';
 
-            let newIdx = activeIdx + direction;
-            if (newIdx >= slides.length) newIdx = 0;
-            if (newIdx < 0) newIdx = slides.length - 1;
-
-            slides[newIdx].classList.add('active');
+            if (gallery.length === 0) {
+                addPhotoInput();
+            } else {
+                gallery.forEach(item => {
+                    addPhotoInput(item.imgSrc, item.caption);
+                });
+            }
         }
     </script>
 </body>
