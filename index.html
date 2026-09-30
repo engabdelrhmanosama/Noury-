@@ -8,8 +8,9 @@
     <style>
         :root {
             --primary-color: #ff4d6d;
-            --bg-gradient: linear-gradient(135deg, #0f0c20 0%, #1a0826 50%, #2b092b 100%);
-            --card-bg: rgba(255, 255, 255, 0.07);
+            --accent-color: #ffb703;
+            --bg-gradient: radial-gradient(circle at center, #2b092b 0%, #1a0826 60%, #0f0c20 100%);
+            --card-bg: rgba(255, 255, 255, 0.06);
             --text-color: #ffffff;
         }
 
@@ -28,21 +29,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            background-attachment: fixed;
         }
 
-        /* القلوب المتساقطة */
+        /* الجسيمات المتحركة */
         .heart {
             position: fixed;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--primary-color);
-            animation: float 6s linear infinite;
+            animation: float 7s linear infinite;
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.5;
+            pointer-events: none;
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
 
         /* شاشات الدخول */
@@ -58,33 +61,42 @@
         }
 
         .auth-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 30px;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 35px 25px;
+            border-radius: 25px;
             text-align: center;
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
         .auth-card h2 {
             font-family: 'Reem Kufi', sans-serif;
             color: var(--primary-color);
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
         }
 
         input, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             margin: 10px 0;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: white;
             text-align: center;
             font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
         }
 
         textarea {
@@ -98,168 +110,197 @@
             padding: 12px;
             margin-top: 10px;
             border: none;
-            border-radius: 10px;
-            background: var(--primary-color);
+            border-radius: 12px;
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
             color: white;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
         }
 
         button:hover {
-            transform: scale(1.03);
-            background: #ff758f;
+            transform: translateY(-2deg);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
         }
 
         .toggle-auth {
             margin-top: 15px;
             font-size: 14px;
-            color: #ccc;
+            color: #ddd;
             cursor: pointer;
             text-decoration: underline;
         }
 
-        /* محتوى الموقع الرئيسي */
+        /* المحتوى الرئيسي */
         .main-content {
             display: none;
             width: 100%;
-            max-width: 900px;
+            max-width: 850px;
             padding: 20px;
             z-index: 1;
         }
 
         header {
             text-align: center;
-            margin: 30px 0 20px 0;
+            margin: 30px 0;
         }
 
         .top-name {
             font-family: 'Reem Kufi', sans-serif;
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #ff758f;
-            text-shadow: 0 0 15px rgba(255, 117, 143, 0.5);
-            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(255, 117, 143, 0.6);
             direction: ltr;
             display: inline-block;
         }
 
-        header p {
-            color: #e0e0e0;
-            font-size: 1.1rem;
-        }
-
-        /* مشغل الصوت */
+        /* مشغل الصوت والموسيقى */
         .music-player {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 15px 20px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
-        /* الرسالة الكبيرة قبل الصور */
+        .play-btn {
+            width: auto;
+            padding: 8px 18px;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* الرسالة الكبيرة */
         .love-letter-card {
-            background: rgba(255, 77, 109, 0.1);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(255, 77, 109, 0.15), rgba(255, 183, 3, 0.05));
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 77, 109, 0.3);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 25px;
+            padding: 35px 25px;
             margin-bottom: 40px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(255, 77, 109, 0.15);
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            position: relative;
         }
 
         .love-letter-card h2 {
             color: var(--primary-color);
             font-family: 'Reem Kufi', sans-serif;
+            font-size: 2rem;
             margin-bottom: 15px;
         }
 
         .love-letter-card p {
-            font-size: 1.2rem;
-            line-height: 2;
+            font-size: 1.25rem;
+            line-height: 2.1;
             white-space: pre-line;
-            color: #ffe6eb;
+            color: #fff0f3;
         }
 
-        /* معرض الصور */
+        /* معرض الذكريات (السلايدر) */
         .gallery {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 35px;
         }
 
         .gallery-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
-        @media (min-width: 600px) {
-            .gallery-card {
-                flex-direction: row;
-            }
-            .gallery-card img {
-                width: 45%;
-            }
-        }
-
-        .gallery-card img {
+        .slider-container {
+            position: relative;
             width: 100%;
-            height: 300px;
-            object-fit: cover;
+            height: 350px;
+            background: #000;
         }
 
-        .gallery-card .text {
-            padding: 25px;
+        .slider-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .slider-img.active {
+            display: block;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            flex: 1;
+            font-size: 18px;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .slider-btn.prev { right: 10px; }
+        .slider-btn.next { left: 10px; }
+
+        .gallery-card .text {
+            padding: 25px;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: center;
+            color: #e2e8f0;
         }
 
         /* لوحة التحكم للأدمن */
         .admin-panel {
             display: none;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px dashed var(--primary-color);
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px dashed var(--primary-color);
+            padding: 25px;
+            border-radius: 20px;
             margin-bottom: 30px;
         }
 
         .admin-panel h3 {
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .section-divider {
             margin: 20px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
         }
     </style>
 </head>
 <body>
 
-    <!-- القلوب المتساقطة -->
+    <!-- القلوب المتحركة -->
     <script>
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 25; i++) {
             let heart = document.createElement('div');
             heart.className = 'heart';
-            heart.innerHTML = '❤';
+            heart.innerHTML = ['❤', '💖', '✨', '🧸'][Math.floor(Math.random() * 4)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
             document.body.appendChild(heart);
         }
     </script>
@@ -268,7 +309,7 @@
     <div id="userAuth" class="auth-container">
         <div class="auth-card">
             <h2>Noury 🧸🌍</h2>
-            <p style="margin-bottom: 15px;">اكتبي تاريخ ارتباطنا لفتح المفاجأة:</p>
+            <p style="margin-bottom: 15px; color: #ccc;">ادخلي تاريخ ارتباطنا لفتح المفاجأة:</p>
             <input type="date" id="anniversaryDate">
             <button onclick="loginUser()">دخول ✨</button>
             <div class="toggle-auth" onclick="switchToAdmin()">دخول الأدمن</div>
@@ -289,15 +330,15 @@
     <div id="mainContent" class="main-content">
         <header>
             <h1 class="top-name">Noury 🧸🌍</h1>
-            <p>حكايتنا سوا والأيام الجميلة</p>
+            <p style="color: #ffb703;">حكايتنا سوا والأيام الجميلة ❤️</p>
         </header>
 
-        <!-- مشغل الأغنية -->
+        <!-- مشغل الموسيقى -->
         <div class="music-player">
             <span>🎵 حبيبي - توليت</span>
-            <audio id="bgMusic" loop controls>
+            <button class="play-btn" onclick="toggleAudio()" id="audioBtn">تشغيل الموسيقى ▶</button>
+            <audio id="bgMusic" loop>
                 <source src="Albumaty.Com_tww_lyt_hby.mp3" type="audio/mpeg">
-                متصفحك لا يدعم مشغل الصوت.
             </audio>
         </div>
 
@@ -309,13 +350,13 @@
 
             <div class="section-divider"></div>
 
-            <h3>📸 إضافة صورة وذكرى جديدة:</h3>
-            <input type="file" id="imageInput" accept="image/*">
-            <input type="text" id="captionInput" placeholder="اكتب الكلام الخاص بهذه الصورة...">
-            <button onclick="addMemory()">إضافة الذكرى</button>
+            <h3>📸 إضافة ألبوم ذكرى جديدة (يمكن تحديد عدة صور):</h3>
+            <input type="file" id="imageInput" accept="image/*" multiple>
+            <input type="text" id="captionInput" placeholder="اكتب الكلام الخاص بهذه الذكرى...">
+            <button onclick="addMemory()">إضافة الذكرى للألبوم</button>
         </div>
 
-        <!-- الرسالة الكبيرة قبل الصور -->
+        <!-- الرسالة الكبيرة -->
         <div class="love-letter-card">
             <h2>رسالة من قلبي ليكِ 💌</h2>
             <p id="mainLetterText">كل سنة وإحنا مع بعض، أنتِ أجمل حاجة حصلت في حياتي...</p>
@@ -323,12 +364,11 @@
 
         <!-- معرض ذكرياتكم -->
         <div class="gallery" id="gallery">
-            <!-- ستظهر الصور المضافة هنا -->
+            <!-- ستظهر الكروت والسلايدر هنا -->
         </div>
     </div>
 
     <script>
-        // تاريخ الارتباط المحدد: 29 مايو 2026 (2026-05-29)
         const CORRECT_DATE = "2026-05-29"; 
         const ADMIN_PASS = "00000000";
 
@@ -360,6 +400,18 @@
             }
         }
 
+        function toggleAudio() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.getElementById('audioBtn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "إيقاف مؤقت ⏸";
+            } else {
+                audio.pause();
+                btn.innerText = "تشغيل الموسيقى ▶";
+            }
+        }
+
         function openWebsite(isAdmin) {
             document.getElementById('userAuth').style.display = 'none';
             document.getElementById('adminAuth').style.display = 'none';
@@ -369,8 +421,11 @@
                 document.getElementById('adminPanel').style.display = 'block';
             }
 
-            const music = document.getElementById('bgMusic');
-            music.play().catch(() => console.log("يتطلب تفاعل للتشغيل الأوتوماتيكي"));
+            // محاولة تشغيل الأغنية تلقائياً
+            const audio = document.getElementById('bgMusic');
+            audio.play().then(() => {
+                document.getElementById('audioBtn').innerText = "إيقاف مؤقت ⏸";
+            }).catch(() => {});
 
             loadMainLetter();
             loadMemories();
@@ -393,26 +448,34 @@
             }
         }
 
+        // إمكانية رفع عدة صور معاً لكل ذكرى
         function addMemory() {
             const imageInput = document.getElementById('imageInput');
             const captionInput = document.getElementById('captionInput');
 
-            if (imageInput.files && imageInput.files[0] && captionInput.value) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
+            if (imageInput.files && imageInput.files.length > 0 && captionInput.value) {
+                const files = Array.from(imageInput.files);
+                const imagePromises = files.map(file => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = e => resolve(e.target.result);
+                        reader.readAsDataURL(file);
+                    });
+                });
+
+                Promise.all(imagePromises).then(imagesArray => {
                     const memories = JSON.parse(localStorage.getItem('memories') || '[]');
                     memories.push({
-                        img: e.target.result,
+                        imgs: imagesArray,
                         text: captionInput.value
                     });
                     localStorage.setItem('memories', JSON.stringify(memories));
                     captionInput.value = '';
                     imageInput.value = '';
                     loadMemories();
-                };
-                reader.readAsDataURL(imageInput.files[0]);
+                });
             } else {
-                alert("يرجى اختيار صورة وكتابة النص!");
+                alert("يرجى اختيار صورة أو أكثر وكتابة الوصف!");
             }
         }
 
@@ -421,15 +484,53 @@
             const memories = JSON.parse(localStorage.getItem('memories') || '[]');
             
             gallery.innerHTML = '';
-            memories.forEach(mem => {
+            memories.forEach((mem, cardIdx) => {
                 const card = document.createElement('div');
                 card.className = 'gallery-card';
+                
+                // التوافق مع الصور القديمة والجديدة (مفردة أو متعددة)
+                const imgs = mem.imgs || [mem.img];
+
+                let sliderHtml = `<div class="slider-container" id="slider-${cardIdx}">`;
+                
+                imgs.forEach((imgSrc, imgIdx) => {
+                    sliderHtml += `<img src="${imgSrc}" class="slider-img ${imgIdx === 0 ? 'active' : ''}" data-idx="${imgIdx}">`;
+                });
+
+                if (imgs.length > 1) {
+                    sliderHtml += `
+                        <button class="slider-btn prev" onclick="moveSlide(${cardIdx}, -1)">❯</button>
+                        <button class="slider-btn next" onclick="moveSlide(${cardIdx}, 1)">❮</button>
+                    `;
+                }
+                
+                sliderHtml += `</div>`;
+
                 card.innerHTML = `
-                    <img src="${mem.img}" alt="ذكرى">
+                    ${sliderHtml}
                     <div class="text">${mem.text}</div>
                 `;
                 gallery.appendChild(card);
             });
+        }
+
+        function moveSlide(cardIdx, direction) {
+            const container = document.getElementById(`slider-${cardIdx}`);
+            const slides = container.querySelectorAll('.slider-img');
+            let activeIdx = 0;
+
+            slides.forEach((slide, idx) => {
+                if (slide.classList.contains('active')) {
+                    activeIdx = idx;
+                    slide.classList.remove('active');
+                }
+            });
+
+            let newIdx = activeIdx + direction;
+            if (newIdx >= slides.length) newIdx = 0;
+            if (newIdx < 0) newIdx = slides.length - 1;
+
+            slides[newIdx].classList.add('active');
         }
     </script>
 </body>
