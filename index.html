@@ -10,7 +10,7 @@
             --primary-color: #ff4d6d;
             --accent-color: #ffb703;
             --bg-gradient: radial-gradient(circle at center, #2b092b 0%, #1a0826 60%, #0f0c20 100%);
-            --card-bg: rgba(255, 255, 255, 0.06);
+            --card-bg: rgba(255, 255, 255, 0.08);
             --text-color: #ffffff;
         }
 
@@ -187,7 +187,6 @@
             margin-bottom: 40px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-            position: relative;
         }
 
         .love-letter-card h2 {
@@ -256,7 +255,6 @@
             justify-content: center;
             font-size: 18px;
             z-index: 10;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .slider-btn.prev { right: 10px; }
@@ -289,6 +287,16 @@
             margin: 20px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
         }
+
+        .delete-btn {
+            background: #d62828;
+            margin-top: 5px;
+            padding: 5px 15px;
+            font-size: 0.85rem;
+            width: auto;
+            align-self: center;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -309,8 +317,8 @@
     <div id="userAuth" class="auth-container">
         <div class="auth-card">
             <h2>Noury 🧸🌍</h2>
-            <p style="margin-bottom: 15px; color: #ccc;">ادخلي تاريخ ارتباطنا لفتح المفاجأة:</p>
-            <input type="date" id="anniversaryDate">
+            <p style="margin-bottom: 15px; color: #ccc;">اكتبي كلمة السر للدخول 🔐:</p>
+            <input type="password" id="userPassword" placeholder="كلمة السر">
             <button onclick="loginUser()">دخول ✨</button>
             <div class="toggle-auth" onclick="switchToAdmin()">دخول الأدمن</div>
         </div>
@@ -337,7 +345,7 @@
         <div class="music-player">
             <span>🎵 حبيبي - توليت</span>
             <button class="play-btn" onclick="toggleAudio()" id="audioBtn">تشغيل الموسيقى ▶</button>
-            <audio id="bgMusic" loop>
+            <audio id="bgMusic" loop preload="auto">
                 <source src="Albumaty.Com_tww_lyt_hby.mp3" type="audio/mpeg">
             </audio>
         </div>
@@ -369,7 +377,8 @@
     </div>
 
     <script>
-        const CORRECT_DATE = "2026-05-29"; 
+        // كلمة سر الزائرة (يمكنك تعديلها من هنا)
+        const USER_PASS = "29052026"; 
         const ADMIN_PASS = "00000000";
 
         function switchToAdmin() {
@@ -383,11 +392,11 @@
         }
 
         function loginUser() {
-            const dateInput = document.getElementById('anniversaryDate').value;
-            if (dateInput === CORRECT_DATE) {
+            const passInput = document.getElementById('userPassword').value;
+            if (passInput === USER_PASS || passInput === "2026-05-29") {
                 openWebsite(false);
             } else {
-                alert("التاريخ غير صحيح! حاول تفتكر أكتر 😉❤️");
+                alert("كلمة السر غير صحيحة! حاول تفتكري أكتر 😉❤️");
             }
         }
 
@@ -404,8 +413,11 @@
             const audio = document.getElementById('bgMusic');
             const btn = document.getElementById('audioBtn');
             if (audio.paused) {
-                audio.play();
-                btn.innerText = "إيقاف مؤقت ⏸";
+                audio.play().then(() => {
+                    btn.innerText = "إيقاف مؤقت ⏸";
+                }).catch(e => {
+                    alert("تعذر تشغيل الصوت، تأكد من وجود ملف الأغنية في GitHub");
+                });
             } else {
                 audio.pause();
                 btn.innerText = "تشغيل الموسيقى ▶";
@@ -421,14 +433,13 @@
                 document.getElementById('adminPanel').style.display = 'block';
             }
 
-            // محاولة تشغيل الأغنية تلقائياً
             const audio = document.getElementById('bgMusic');
             audio.play().then(() => {
                 document.getElementById('audioBtn').innerText = "إيقاف مؤقت ⏸";
             }).catch(() => {});
 
             loadMainLetter();
-            loadMemories();
+            loadMemories(isAdmin);
         }
 
         function saveMainLetter() {
@@ -448,38 +459,82 @@
             }
         }
 
-        // إمكانية رفع عدة صور معاً لكل ذكرى
+        // تحسين عملية ضغط وتقليل حجم الصور حتى تترفع وتحفظ بدون مشاكل
+        function compressImage(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const max = 800; // أقصى عرض/ارتفاع لضمان السرعة والمساحة
+
+                    if (width > height && width > max) {
+                        height *= max / width;
+                        width = max;
+                    } else if (height > max) {
+                        width *= max / height;
+                        height = max;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', 0.7)); // ضغط الصورة بنسبة 70%
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function addMemory() {
             const imageInput = document.getElementById('imageInput');
             const captionInput = document.getElementById('captionInput');
 
             if (imageInput.files && imageInput.files.length > 0 && captionInput.value) {
                 const files = Array.from(imageInput.files);
-                const imagePromises = files.map(file => {
-                    return new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = e => resolve(e.target.result);
-                        reader.readAsDataURL(file);
-                    });
-                });
+                const compressedImages = [];
+                let processed = 0;
 
-                Promise.all(imagePromises).then(imagesArray => {
-                    const memories = JSON.parse(localStorage.getItem('memories') || '[]');
-                    memories.push({
-                        imgs: imagesArray,
-                        text: captionInput.value
+                files.forEach(file => {
+                    compressImage(file, function(compressedUrl) {
+                        compressedImages.push(compressedUrl);
+                        processed++;
+                        if (processed === files.length) {
+                            try {
+                                const memories = JSON.parse(localStorage.getItem('memories') || '[]');
+                                memories.push({
+                                    imgs: compressedImages,
+                                    text: captionInput.value
+                                });
+                                localStorage.setItem('memories', JSON.stringify(memories));
+                                captionInput.value = '';
+                                imageInput.value = '';
+                                alert("تمت إضافة الذكرى والألبوم بنجاح ✨");
+                                loadMemories(true);
+                            } catch (e) {
+                                alert("المساحة المتاحة للصور امتلأت! حاول رفع عدد صور أقل أو بحجم أصغر.");
+                            }
+                        }
                     });
-                    localStorage.setItem('memories', JSON.stringify(memories));
-                    captionInput.value = '';
-                    imageInput.value = '';
-                    loadMemories();
                 });
             } else {
-                alert("يرجى اختيار صورة أو أكثر وكتابة الوصف!");
+                alert("يرجى اختيار صورة أو أكثر وكتابة النص!");
             }
         }
 
-        function loadMemories() {
+        function deleteMemory(index) {
+            if (confirm("هل أنت تأكد من حذف هذه الذكرى؟")) {
+                const memories = JSON.parse(localStorage.getItem('memories') || '[]');
+                memories.splice(index, 1);
+                localStorage.setItem('memories', JSON.stringify(memories));
+                loadMemories(true);
+            }
+        }
+
+        function loadMemories(isAdmin = false) {
             const gallery = document.getElementById('gallery');
             const memories = JSON.parse(localStorage.getItem('memories') || '[]');
             
@@ -488,13 +543,12 @@
                 const card = document.createElement('div');
                 card.className = 'gallery-card';
                 
-                // التوافق مع الصور القديمة والجديدة (مفردة أو متعددة)
                 const imgs = mem.imgs || [mem.img];
 
                 let sliderHtml = `<div class="slider-container" id="slider-${cardIdx}">`;
                 
                 imgs.forEach((imgSrc, imgIdx) => {
-                    sliderHtml += `<img src="${imgSrc}" class="slider-img ${imgIdx === 0 ? 'active' : ''}" data-idx="${imgIdx}">`;
+                    sliderHtml += `<img src="${imgSrc}" class="slider-img ${imgIdx === 0 ? 'active' : ''}">`;
                 });
 
                 if (imgs.length > 1) {
@@ -506,9 +560,12 @@
                 
                 sliderHtml += `</div>`;
 
+                let deleteBtnHtml = isAdmin ? `<button class="delete-btn" onclick="deleteMemory(${cardIdx})">حذف الذكرى 🗑️</button>` : '';
+
                 card.innerHTML = `
                     ${sliderHtml}
                     <div class="text">${mem.text}</div>
+                    ${deleteBtnHtml}
                 `;
                 gallery.appendChild(card);
             });
